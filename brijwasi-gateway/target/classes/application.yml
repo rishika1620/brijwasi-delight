@@ -1,0 +1,75 @@
+spring:
+  main:
+    web-application-type: reactive
+
+  application:
+    name: brijwasi-gateway
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+      routes:
+        - id: auth-service
+          uri: lb://brijwasi-auth
+          predicates:
+            - Path=/auth/**
+
+        - id: menu-service
+          uri: lb://brijwasi-menu
+          predicates:
+            - Path=/menu/**
+
+        - id: cart-service
+          uri: lb://brijwasi-cart
+          predicates:
+            - Path=/cart/**
+
+        - id: order-service
+          uri: lb://brijwasi-order
+          predicates:
+            - Path=/orders/**
+
+        - id: payment-service
+          uri: lb://brijwasi-payment
+          predicates:
+            - Path=/payments/**
+
+        - id: notification-service
+          uri: lb://brijwasi-notification
+          predicates:
+            - Path=/notifications/**
+
+        - id: admin-menu
+          uri: lb://brijwasi-menu
+          predicates:
+            - Path=/admin/**
+
+    discovery:
+      locator:
+        enabled: true
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+security:
+  jwt:
+    secret: ChangeMeInAuthServiceSecretKeyMustBe32BytesMinimum

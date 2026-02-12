@@ -1,0 +1,60 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Welcome Back!</h1>
+      <p>Login to continue to Brijwasi Delight</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input
+          type="tel"
+          id="mobileNumber"
+          class="form-control"
+          formControlName="mobileNumber"
+          [class.is-invalid]="submitted && f['mobileNumber'].errors"
+          placeholder="Enter your 10-digit mobile number"
+        />
+        <div *ngIf="submitted && f['mobileNumber'].errors" class="error-message">
+          <span *ngIf="f['mobileNumber'].errors['required']">Mobile number is required</span>
+          <span *ngIf="f['mobileNumber'].errors['pattern']">Mobile number must be 10 digits</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          [class.is-invalid]="submitted && f['password'].errors"
+          placeholder="Enter your password"
+        />
+        <div *ngIf="submitted && f['password'].errors" class="error-message">
+          <span *ngIf="f['password'].errors['required']">Password is required</span>
+          <span *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-2"></span>
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a routerLink="/auth/register">Sign up here</a></p>
+      <p>Forgot your password? <a routerLink="/auth/forgot-password">Reset it here</a></p>
+    </div>
+  </div>
+</div>

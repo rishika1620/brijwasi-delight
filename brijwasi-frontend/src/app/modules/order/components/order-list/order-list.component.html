@@ -1,0 +1,86 @@
+<div class="order-container">
+  <div class="order-header">
+    <h1>My Orders</h1>
+  </div>
+
+  <!-- Status Filter -->
+  <div class="status-filter">
+    <button 
+      *ngFor="let status of orderStatuses"
+      [class.active]="selectedStatus === status.id"
+      (click)="filterByStatus(status.id)"
+      class="filter-btn"
+    >
+      {{ status.label }}
+    </button>
+  </div>
+
+  <!-- Orders List -->
+  <div class="orders-list" *ngIf="!loading && filteredOrders.length > 0">
+    <div class="order-card" *ngFor="let order of filteredOrders">
+      <div class="order-header-row">
+        <div class="order-id">
+          <span class="label">Order ID:</span>
+          <span class="value">#{{ order.id }}</span>
+        </div>
+        <div class="order-status">
+          <span [class]="'badge ' + getStatusBadge(order.status)">
+            {{ getStatusLabel(order.status) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="order-details">
+        <div class="detail-item">
+          <span class="label">Date:</span>
+          <span class="value">{{ order.createdAt | date: 'short' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Delivery Address:</span>
+          <span class="value">{{ order.deliveryAddress.street }}, {{ order.deliveryAddress.city }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Est. Delivery:</span>
+          <span class="value">{{ order.estimatedDeliveryTime || 'Processing' }}</span>
+        </div>
+      </div>
+
+      <div class="order-items">
+        <h4>Items</h4>
+        <div class="items-list">
+          <div class="item" *ngFor="let item of order.items">
+            <div class="item-image">🍛</div>
+            <div class="item-info">
+              <span class="name">{{ item.menuItemName }}</span>
+              <span class="qty">Qty: {{ item.quantity }}</span>
+            </div>
+            <span class="price">₹{{ item.price * item.quantity }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-total">
+        <span class="label">Total Amount:</span>
+        <span class="amount">₹{{ order.totalAmount }}</span>
+      </div>
+
+      <div class="order-actions">
+        <button class="btn btn-secondary">View Details</button>
+        <button class="btn btn-secondary" *ngIf="order.status === 'DELIVERED'">Reorder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && filteredOrders.length === 0">
+    <div class="empty-icon">📦</div>
+    <h3>No orders found</h3>
+    <p>You haven't placed any orders yet</p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading your orders...</p>
+  </div>
+</div>

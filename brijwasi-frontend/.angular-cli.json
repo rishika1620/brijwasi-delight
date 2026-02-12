@@ -1,0 +1,6 @@
+{
+  "extends": "@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  }
+}

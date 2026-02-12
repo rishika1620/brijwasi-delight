@@ -1,0 +1,201 @@
+<div class="preferences-container">
+  <div class="preferences-header">
+    <h2>Preferences</h2>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    ✓ {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    ✗ {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="preferencesForm" class="preferences-form">
+    <!-- Notification Preferences -->
+    <section class="preference-section">
+      <h3>📧 Notification Preferences</h3>
+      <div class="description">
+        Choose how you want to receive updates and notifications
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="emailNotifications"
+              class="preference-checkbox"
+            />
+            <span>Email Notifications</span>
+          </label>
+          <p class="preference-description">
+            Receive order updates, promotions, and news via email
+          </p>
+        </div>
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="smsNotifications"
+              class="preference-checkbox"
+            />
+            <span>SMS Notifications</span>
+          </label>
+          <p class="preference-description">
+            Get important updates as SMS messages
+          </p>
+        </div>
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="pushNotifications"
+              class="preference-checkbox"
+            />
+            <span>Push Notifications</span>
+          </label>
+          <p class="preference-description">
+            Get real-time updates from the app
+          </p>
+        </div>
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="promotionalEmails"
+              class="preference-checkbox"
+            />
+            <span>Promotional Offers</span>
+          </label>
+          <p class="preference-description">
+            Receive exclusive deals and discounts
+          </p>
+        </div>
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="newsLetterSubscribed"
+              class="preference-checkbox"
+            />
+            <span>Newsletter</span>
+          </label>
+          <p class="preference-description">
+            Subscribe to our weekly newsletter
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Language & Currency -->
+    <section class="preference-section">
+      <h3>🌍 Language & Currency</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="preferredLanguage">Preferred Language</label>
+          <select id="preferredLanguage" formControlName="preferredLanguage" class="form-control">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="preferredCurrency">Preferred Currency</label>
+          <select id="preferredCurrency" formControlName="preferredCurrency" class="form-control">
+            <option value="INR">Indian Rupee (₹)</option>
+            <option value="USD">US Dollar ($)</option>
+            <option value="EUR">Euro (€)</option>
+            <option value="GBP">British Pound (£)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Food Preferences -->
+    <section class="preference-section">
+      <h3>🍽️ Food Preferences</h3>
+      <div class="description">
+        Help us personalize your food recommendations
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="isVegetarian"
+              class="preference-checkbox"
+            />
+            <span>I'm Vegetarian</span>
+          </label>
+          <p class="preference-description">
+            Show vegetarian options primarily
+          </p>
+        </div>
+      </div>
+
+      <div class="preference-item">
+        <div class="preference-content">
+          <label class="preference-label">
+            <input
+              type="checkbox"
+              formControlName="isSpicyFoodLover"
+              class="preference-checkbox"
+            />
+            <span>I Love Spicy Food</span>
+          </label>
+          <p class="preference-description">
+            Recommend spicy dishes
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dietaryRestrictions">Dietary Restrictions</label>
+        <textarea
+          id="dietaryRestrictions"
+          formControlName="dietaryRestrictions"
+          class="form-control"
+          placeholder="e.g., No nuts, No dairy, No gluten, etc."
+          rows="4"
+        ></textarea>
+      </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <div class="preference-actions">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="savePreferences()"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Saving...' : 'Save Preferences' }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="resetPreferences()"
+        [disabled]="loading"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+</div>

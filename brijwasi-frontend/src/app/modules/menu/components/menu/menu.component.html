@@ -1,0 +1,72 @@
+<div class="menu-container">
+  <div class="menu-header">
+    <h1>Our Menu</h1>
+    <p>Discover our delicious collection of authentic Indian dishes</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="menu-controls">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Search dishes..." 
+        [(ngModel)]="searchQuery"
+        (input)="search(searchQuery)"
+        class="search-input"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="category-filter">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === category.id"
+        (click)="filterByCategory(category.id)"
+        class="filter-btn"
+      >
+        {{ category.name }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Items Grid -->
+  <div class="menu-items-grid" *ngIf="!loading">
+    <div class="menu-item-card" *ngFor="let item of filteredItems">
+      <div class="item-image-wrapper">
+        <img [src]="item.imageUrl || 'assets/images/placeholder.jpg'" [alt]="item.name" class="item-image" />
+        <div class="item-badge" *ngIf="item.vegetarian">VEG</div>
+      </div>
+
+      <div class="item-content">
+        <div class="item-header">
+          <h3>{{ item.name }}</h3>
+          <span class="price">₹{{ item.price }}</span>
+        </div>
+
+        <p class="description">{{ item.description }}</p>
+
+        <div class="item-footer">
+          <div class="rating">
+            <span class="stars">⭐ {{ item.rating }}</span>
+          </div>
+          <button (click)="addToCart(item)" class="btn btn-add-to-cart">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && filteredItems.length === 0">
+    <div class="empty-icon">🍽️</div>
+    <h3>No dishes found</h3>
+    <p>Try adjusting your search or filter criteria</p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading menu...</p>
+  </div>
+</div>

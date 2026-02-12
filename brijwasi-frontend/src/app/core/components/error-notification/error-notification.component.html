@@ -1,0 +1,10 @@
+<div class="error-notification" *ngIf="errorMessage">
+  <div class="error-content">
+    <div class="error-icon">⚠️</div>
+    <div class="error-message">
+      <strong>Error ({{ statusCode }})</strong>
+      <p>{{ errorMessage }}</p>
+    </div>
+    <button class="close-btn" (click)="closeError()" aria-label="Close error message">✕</button>
+  </div>
+</div>

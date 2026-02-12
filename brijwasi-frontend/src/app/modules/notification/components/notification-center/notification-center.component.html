@@ -1,0 +1,67 @@
+<div class="notification-container">
+  <div class="notification-header">
+    <h1>Notifications</h1>
+    <button *ngIf="getUnreadCount() > 0" (click)="markAllAsRead()" class="btn-text">
+      Mark all as read
+    </button>
+  </div>
+
+  <!-- Unread Badge -->
+  <div *ngIf="getUnreadCount() > 0" class="unread-badge">
+    You have {{ getUnreadCount() }} unread notification(s)
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button 
+      *ngFor="let filter of filters"
+      [class.active]="selectedFilter === filter.id"
+      (click)="filterByType(filter.id)"
+      class="tab-btn"
+    >
+      {{ filter.label }}
+    </button>
+  </div>
+
+  <!-- Notifications List -->
+  <div class="notifications-list" *ngIf="!loading && filteredNotifications.length > 0">
+    <div 
+      class="notification-item"
+      *ngFor="let notification of filteredNotifications"
+      [class.unread]="!notification.read"
+    >
+      <div class="notification-icon">
+        <span *ngIf="notification.type.toString().includes('ORDER')">📦</span>
+        <span *ngIf="notification.type.toString().includes('PROMOTION')">🎉</span>
+        <span *ngIf="notification.type.toString().includes('SYSTEM')">ℹ️</span>
+      </div>
+
+      <div class="notification-content" (click)="markAsRead(notification.id)">
+        <h3>{{ notification.title }}</h3>
+        <p>{{ notification.message }}</p>
+        <span class="time">{{ getTimeAgo(notification.createdAt) }}</span>
+      </div>
+
+      <button 
+        (click)="deleteNotification(notification.id)"
+        class="btn-delete"
+        title="Delete notification"
+      >
+        ×
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && filteredNotifications.length === 0">
+    <div class="empty-icon">🔔</div>
+    <h3>No notifications</h3>
+    <p>You're all caught up!</p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading notifications...</p>
+  </div>
+</div>

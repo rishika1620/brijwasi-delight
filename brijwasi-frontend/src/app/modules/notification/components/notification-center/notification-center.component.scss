@@ -1,0 +1,201 @@
+.notification-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 32px;
+    color: #333;
+    margin: 0;
+  }
+
+  .btn-text {
+    background: none;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #5568d3;
+    }
+  }
+}
+
+.unread-badge {
+  background: #cfe2ff;
+  color: #084298;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 13px;
+  color: #333;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #667eea;
+    color: #667eea;
+  }
+
+  &.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+  }
+}
+
+.notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification-item {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 40px 1fr 30px;
+  gap: 15px;
+  align-items: flex-start;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &.unread {
+    background: #f9faff;
+    border-color: #667eea;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+.notification-content {
+  flex: 1;
+
+  h3 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0 0 8px 0;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .time {
+    color: #999;
+    font-size: 12px;
+  }
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #dc3545;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+
+  .empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    color: #333;
+    margin: 0 0 10px 0;
+  }
+
+  p {
+    color: #999;
+    margin: 0;
+  }
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    margin-top: 20px;
+    color: #666;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

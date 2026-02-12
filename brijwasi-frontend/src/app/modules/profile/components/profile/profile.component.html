@@ -1,0 +1,179 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+  </div>
+
+  <div class="profile-layout">
+    <!-- Profile Form -->
+    <div class="profile-card">
+      <div *ngIf="saveSuccess" class="alert alert-success">
+        ✓ Profile updated successfully!
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <h2>Personal Information</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              class="form-control"
+              [class.is-invalid]="firstName?.errors && firstName?.touched"
+            />
+            <div *ngIf="firstName?.errors && firstName?.touched" class="error">
+              First name is required (min 2 characters)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              class="form-control"
+              [class.is-invalid]="lastName?.errors && lastName?.touched"
+            />
+            <div *ngIf="lastName?.errors && lastName?.touched" class="error">
+              Last name is required (min 2 characters)
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="email?.errors && email?.touched"
+          />
+          <div *ngIf="email?.errors && email?.touched" class="error">
+            Valid email is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-control"
+            [class.is-invalid]="phone?.errors && phone?.touched"
+          />
+          <div *ngIf="phone?.errors && phone?.touched" class="error">
+            Valid 10 digit phone number is required
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="loading || profileForm.invalid">
+          {{ loading ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </form>
+
+      <!-- Change Password Section -->
+      <div class="change-password-section">
+        <button (click)="toggleChangePassword()" type="button" class="btn-link">
+          {{ showChangePassword ? '✕ Hide' : '🔒 Change Password' }}
+        </button>
+
+        <div *ngIf="showChangePassword" class="change-password-form">
+          <h3>Change Your Password</h3>
+
+          <div *ngIf="changePasswordSuccess" class="alert alert-success">
+            ✓ Password changed successfully!
+          </div>
+
+          <div *ngIf="changePasswordError" class="alert alert-danger">
+            {{ changePasswordError }}
+          </div>
+
+          <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                class="form-control"
+                formControlName="currentPassword"
+                placeholder="Enter current password"
+                [class.is-invalid]="currentPasswordCtrl?.errors && currentPasswordCtrl?.touched"
+              />
+              <div *ngIf="currentPasswordCtrl?.errors && currentPasswordCtrl?.touched" class="error">
+                Current password is required
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                class="form-control"
+                formControlName="newPassword"
+                placeholder="Enter new password (min 6 characters)"
+                [class.is-invalid]="newPasswordCtrl?.errors && newPasswordCtrl?.touched"
+              />
+              <div *ngIf="newPasswordCtrl?.errors && newPasswordCtrl?.touched" class="error">
+                <span *ngIf="newPasswordCtrl?.errors?.['required']">New password is required</span>
+                <span *ngIf="newPasswordCtrl?.errors?.['minlength']">Password must be at least 6 characters</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
+                formControlName="confirmPassword"
+                placeholder="Confirm new password"
+                [class.is-invalid]="(confirmPasswordCtrl?.errors || changePasswordForm.errors?.['passwordMismatch']) && confirmPasswordCtrl?.touched"
+              />
+              <div *ngIf="(confirmPasswordCtrl?.errors || changePasswordForm.errors?.['passwordMismatch']) && confirmPasswordCtrl?.touched" class="error">
+                <span *ngIf="confirmPasswordCtrl?.errors?.['required']">Confirm password is required</span>
+                <span *ngIf="changePasswordForm.errors?.['passwordMismatch']">Passwords do not match</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="changePasswordLoading || changePasswordForm.invalid">
+              {{ changePasswordLoading ? 'Updating...' : 'Update Password' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Info Sidebar -->
+    <div class="sidebar">
+      <div class="info-card">
+        <h3>Account Status</h3>
+        <div class="info-item">
+          <span class="label">Member Since:</span>
+          <span class="value">Jan 2025</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Total Orders:</span>
+          <span class="value">5</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Loyalty Points:</span>
+          <span class="value">250</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Quick Links</h3>
+        <a href="/profile/addresses" class="quick-link">📍 Manage Addresses</a>
+        <a href="/profile/payment-methods" class="quick-link">💳 Payment Methods</a>
+        <a href="/profile/preferences" class="quick-link">⚙️ Preferences</a>
+        <a href="/help" class="quick-link">❓ Help & Support</a>
+      </div>
+    </div>
+  </div>
+</div>

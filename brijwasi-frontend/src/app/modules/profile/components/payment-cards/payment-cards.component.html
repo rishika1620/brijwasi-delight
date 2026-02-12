@@ -1,0 +1,150 @@
+<div class="payment-cards-container">
+  <div class="cards-header">
+    <h2>Payment Methods</h2>
+    <button class="btn btn-primary" (click)="toggleCardForm()">
+      {{ showCardForm ? '✕ Cancel' : '+ Add Payment Method' }}
+    </button>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Add/Edit Card Form -->
+  <div *ngIf="showCardForm" class="card-form-container">
+    <h3>{{ editingCardId ? 'Edit Payment Method' : 'Add Payment Method' }}</h3>
+    <form [formGroup]="cardForm" (ngSubmit)="saveCard()">
+      <div class="form-group">
+        <label for="cardType">Card Type</label>
+        <select id="cardType" formControlName="cardType" class="form-control">
+          <option value="CREDIT">Credit Card</option>
+          <option value="DEBIT">Debit Card</option>
+          <option value="UPI">UPI</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cardHolderName">Cardholder Name</label>
+        <input
+          type="text"
+          id="cardHolderName"
+          formControlName="cardHolderName"
+          class="form-control"
+          placeholder="Full name as on card"
+          [class.is-invalid]="submitted && cardForm.get('cardHolderName')?.invalid"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" *ngIf="cardForm.get('cardType')?.value !== 'UPI'">
+          <label for="cardNumber">Card Last 4 Digits</label>
+          <input
+            type="text"
+            id="cardNumber"
+            formControlName="cardNumber"
+            class="form-control"
+            placeholder="XXXX"
+            maxlength="4"
+            [class.is-invalid]="submitted && cardForm.get('cardNumber')?.invalid"
+          />
+        </div>
+        <div class="form-group" *ngIf="cardForm.get('cardType')?.value === 'UPI'">
+          <label for="upiId">UPI ID</label>
+          <input
+            type="text"
+            id="upiId"
+            formControlName="upiId"
+            class="form-control"
+            placeholder="yourname@upi"
+            [class.is-invalid]="submitted && cardForm.get('upiId')?.invalid"
+          />
+        </div>
+      </div>
+
+      <div *ngIf="cardForm.get('cardType')?.value !== 'UPI'" class="form-row">
+        <div class="form-group">
+          <label for="expiryMonth">Expiry Month</label>
+          <input
+            type="number"
+            id="expiryMonth"
+            formControlName="expiryMonth"
+            class="form-control"
+            min="1"
+            max="12"
+            placeholder="MM"
+            [class.is-invalid]="submitted && cardForm.get('expiryMonth')?.invalid"
+          />
+        </div>
+        <div class="form-group">
+          <label for="expiryYear">Expiry Year</label>
+          <input
+            type="number"
+            id="expiryYear"
+            formControlName="expiryYear"
+            class="form-control"
+            [min]="currentYear"
+            placeholder="YYYY"
+            [class.is-invalid]="submitted && cardForm.get('expiryYear')?.invalid"
+          />
+        </div>
+      </div>
+
+      <div class="form-checkbox">
+        <input
+          type="checkbox"
+          id="isDefault"
+          formControlName="isDefault"
+        />
+        <label for="isDefault">Set as default payment method</label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          {{ loading ? 'Saving...' : 'Save Card' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Payment Cards List -->
+  <div class="payment-cards-list">
+    <div *ngIf="paymentCards.length === 0" class="empty-state">
+      <p>💳 No payment methods saved. Add your first card to get started!</p>
+    </div>
+
+    <div *ngFor="let card of paymentCards" class="card-item">
+      <div class="card-visual">
+        <div class="card-icon">
+          {{ getCardTypeIcon(card.cardType) }}
+        </div>
+        <div class="card-info">
+          <p class="card-type">{{ card.cardType === 'UPI' ? card.upiId : 'Card ending in ' + card.cardNumber }}</p>
+          <p class="card-holder">{{ card.cardHolderName }}</p>
+          <p class="card-expiry" *ngIf="card.expiryMonth && card.expiryYear">
+            Expires: {{ card.expiryMonth }}/{{ card.expiryYear }}
+          </p>
+        </div>
+        <span *ngIf="card.isDefault" class="badge">Default</span>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn-icon" (click)="editCard(card)" title="Edit">
+          ✏️ Edit
+        </button>
+        <button class="btn-icon" *ngIf="!card.isDefault" (click)="setDefault(card.id!)" title="Set as default">
+          ⭐ Set Default
+        </button>
+        <button class="btn-icon danger" (click)="deleteCard(card.id!)" title="Delete">
+          🗑️ Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

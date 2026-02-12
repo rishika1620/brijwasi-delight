@@ -1,0 +1,79 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Brijwasi Delight</h1>
+      <p>Experience authentic Indian cuisine delivered to your door</p>
+      <button (click)="viewMenu()" class="btn btn-primary btn-lg">
+        Order Now
+      </button>
+    </div>
+    <div class="hero-image">
+      <div class="hero-emoji">🍜</div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section">
+    <h2>Explore Categories</h2>
+    <div class="categories-grid">
+      <div class="category-card" *ngFor="let category of categories">
+        <div class="category-icon">{{ category.icon }}</div>
+        <h3>{{ category.name }}</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Items Section -->
+  <section class="featured-section">
+    <div class="section-header">
+      <h2>Featured Dishes</h2>
+      <a (click)="viewMenu()" class="view-all">View All →</a>
+    </div>
+
+    <div class="featured-grid" *ngIf="featuredItems.length > 0">
+      <div class="featured-card" *ngFor="let item of featuredItems" (click)="viewItem(item.id)">
+        <div class="card-image-wrapper">
+          <img [src]="item.image" [alt]="item.name" class="card-image" />
+          <div class="card-overlay">
+            <button class="btn btn-small">View Details</button>
+          </div>
+        </div>
+        <div class="card-content">
+          <h3>{{ item.name }}</h3>
+          <div class="card-footer">
+            <span class="price">₹{{ item.price }}</span>
+            <span class="rating">⭐ {{ item.rating }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-choose-us">
+    <h2>Why Choose Us?</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Get your food delivered within 30 minutes</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👨‍🍳</div>
+        <h3>Quality Food</h3>
+        <p>Prepared with fresh ingredients and authentic recipes</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Best Prices</h3>
+        <p>Competitive pricing with frequent discounts</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Safe & Hygienic</h3>
+        <p>Strictly following food safety standards</p>
+      </div>
+    </div>
+  </section>
+</div>

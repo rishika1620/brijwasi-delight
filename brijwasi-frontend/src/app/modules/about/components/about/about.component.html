@@ -1,0 +1,87 @@
+<div class="about-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>About Brijwasi Delight</h1>
+      <p class="tagline">Bringing Authentic Indian Flavors to Your Door</p>
+    </div>
+    <div class="hero-image">🍜</div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="story-section">
+    <div class="story-content">
+      <h2>Our Story</h2>
+      <p>
+        Founded in 2020, Brijwasi Delight started with a simple mission: to deliver authentic Indian cuisine
+        with the same love and care that goes into home cooking. What began as a small kitchen has grown into
+        a trusted food delivery platform serving thousands of satisfied customers.
+      </p>
+      <p>
+        We believe that great food brings people together. Every dish we prepare is crafted with traditional
+        recipes passed down through generations, using only the freshest and finest ingredients.
+      </p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2>Why Choose Us</h2>
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let feature of features">
+        <div class="feature-icon">{{ feature.icon }}</div>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="mission-section">
+    <div class="mission-card">
+      <h3>Our Mission</h3>
+      <p>
+        To make authentic Indian cuisine accessible to everyone by delivering high-quality, freshly prepared
+        meals with exceptional customer service at competitive prices.
+      </p>
+    </div>
+    <div class="vision-card">
+      <h3>Our Vision</h3>
+      <p>
+        To become the most trusted and preferred food delivery platform for Indian cuisine, known for quality,
+        reliability, and customer satisfaction.
+      </p>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <h2>Meet Our Team</h2>
+    <div class="team-grid">
+      <div class="team-member" *ngFor="let member of teamMembers">
+        <div class="member-avatar">{{ member.image }}</div>
+        <h3>{{ member.name }}</h3>
+        <p>{{ member.role }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <h2>Get in Touch</h2>
+    <div class="contact-info">
+      <div class="info-item">
+        <span class="icon">📍</span>
+        <p>123 Food Street, Culinary City, CC 12345</p>
+      </div>
+      <div class="info-item">
+        <span class="icon">📞</span>
+        <p>+1 (555) 123-4567</p>
+      </div>
+      <div class="info-item">
+        <span class="icon">📧</span>
+        <p>support&#64;brijwasidelight.com</p>
+      </div>
+    </div>
+  </section>
+</div>
